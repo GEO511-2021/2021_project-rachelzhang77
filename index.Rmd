@@ -6,13 +6,13 @@ output:
     keep_md: true
 ---
 
-# Introduction
+# Introduction 
 
     The surgent growth of gentrification across U.S. cities since the 1970s has received increasing attention from American society. Gentrification has significantly changed — for better or worse — the neighborhood socioeconomic characteristics. Besides, this city redevelopment trend has nearly coincided with the U.S. crime changes in the late 20th century — the crime rates in major U.S. cities increased from the 1960s to 1980s, and they experienced a considerable drop during the 1990s (Barton 2016). Considering the widespread spatial phenomenon and the growing importance of crime occurrences in the United States, it is essential to explore the potential association between these two compelling trends.
     Due to the inconsistent operationalizations and limited methodological approaches in the fields of gentrification and crime, the few studies on their relationship have drawn conflicting conclusions. Several studies have concluded that there is a positive relationship between gentrification and crime due to the incomplete neighborhood transformation, the disruption of the established social order, or the aggregation of suitable and lucrative targets — the move-in middle-class residents, in gentrifying inner-city neighborhoods (Covington and Taylor 1989). Other scholars have argued that gentrification has accompanied with the decreasing neighborhood crime rates by establishing relatively stable areas with the influx of economically advantaged residents (Barton 2016; MacDonald and Stokes 2020; Papachristos et al. 2011). My research intends to fill the research gaps by examining the overall association between gentrification using a comprehensive gentrification measurement. I also examine the association between specific gentrification mechanisms and crime. Specifically, my study attempts to examine the impact of different degrees and aspects of gentrification on the neighborhood crime rate at the census tract level in Buffalo, NY, by using a modified quantitative measurement of gentrification typology.
 
 
-# Data and Methods
+# Data and Methods 
 
     The current study examined the association of gentrification and seven (?) forms of violent crime in Buffalo, NY for the period 2011 to 2019 at census tract level. This objective was achieved by utilizing two steps. First, the quantitative operationalization of gentrification and the typology of gentrification degree were based on changes in sociodemographic and socioeconomic characteristics in Buffalo, NY (79 tracts) from 2011 to 2019 American Community Survey 1-year Estimate data. Second, correlation in gentrification and crime over this 9-year period was examined to determine whether the association in Buffalo (79 tracts) was varied over time, which was important given the dynamic nature of gentrification. The Ordinary Least Squares Regression (OLS), controlling between-unit variation, is applied here to examine the association between gentrification and crime.
 
@@ -29,7 +29,7 @@ Operationalization of Gentrification
 See [http://rmarkdown.rstudio.com/](http://rmarkdown.rstudio.com/) for all the amazing things you can do.
 
 
-Here's my first code chunk.
+Here's my first code chunk. 
 ```{r,message=F, warning=F}
 library(tidycensus)
 library(sf)
@@ -48,14 +48,14 @@ readRenviron("~/.Renviron")
 ```
 
 
-```{r, message=F, warning=F}
+```{r, message=F, warning=F} 
 library(tidyverse)
 library(leaflet)
 library(kableExtra)
 knitr::opts_chunk$set(cache=TRUE)  # cache the results for quick compiling
 ```
 
-## Download and clean all required data
+## Download and clean all required data 
 ```{r,message=F, warning=F,results="hide"}
 year=2012:2019
 tract.list=NULL
@@ -116,19 +116,19 @@ for (i in 1:8){
   
   county.list[i]=list(d2)
   
-  ###make the tract data into wide format from the long format
+  ###make the tract data into wide format from the long format 
   
   
   d1_noMOE=subset(d1,select=-moe)
   d1=spread(d1_noMOE, key = variable, value = estimate)
   
   
-  ###make the county data into wide format from the long format
+  ###make the county data into wide format from the long format 
   d2_noMOE=subset(d2,select=-moe)
   d2=spread(d2_noMOE, key = variable, value = estimate)
   
   
-  #then merge the county dataset with the tract dataset
+  #then merge the county dataset with the tract dataset 
   d_merge=merge(d1,d2,
                 by.x = "CountyGEOID", by.y = "GEOID")
   # str(d_merge)
@@ -199,40 +199,40 @@ county_2011 = get_acs(geography = "county", state = "NY",
                       ),year=2011,geometry = FALSE, 
                       cache_table=T)
 
-###make the tract data into wide format from the long format
+###make the tract data into wide format from the long format 
 tract_2011_noMOE=subset(tract_2011,select=-moe)
 tract_2011=spread(tract_2011_noMOE, key = variable, value = estimate)
 
-###make the county data into wide format from the long format
+###make the county data into wide format from the long format 
 county_2011_noMOE=subset(county_2011,select=-moe)
 county_2011=spread(county_2011_noMOE, key = variable, value = estimate)
 ```
 
 ```{r,message=F, warning=F,results="hide"}
-#######add Bachelor's degree manually (both for the county and tract level) from the census 2011 acs 5 year estimate survey 
-#######since there isn't any variable for the bachelor's degree for total population over 25 years old
+#######add Bachelor's degree manually (both for the county and tract level) from the census 2011 acs 5 year estimate survey  
+#######since there isn't any variable for the bachelor's degree for total population over 25 years old 
 
 ##for tract new variables
 tract_2011_web=read.csv("Data/R12919572_SL140.csv")
 tract_2011_manual=tract_2011_web %>%
   subset(.data = tract_2011_web,select=c(Geo_NAME,SE_A12001_001,SE_A12001_005))
-##for county new variables
+##for county new variables 
 county_2011_web=read.csv(file="Data/R12919572_SL050.csv")
 county_2011_manual=county_2011_web %>%
   subset(.data = county_2011_web,select=c(Geo_NAME,SE_A12001_001,SE_A12001_005))
 
-##rename the column, get rid of the variable id
+##rename the column, get rid of the variable id 
 tract_2011_manual=rename(tract_2011_manual, degreeTotal_t=SE_A12001_001,collegedegree_t=SE_A12001_005)
 county_2011_manual=rename(county_2011_manual, degreeTotal_c=SE_A12001_001,collegedegree_c=SE_A12001_005)
 
-###join the web tract and county education info with the original 2011 acs data
+###join the web tract and county education info with the original 2011 acs data 
 tract_2011_join=left_join(tract_2011,tract_2011_manual,by=c("NAME"="Geo_NAME"))
 county_2011_join=left_join(county_2011,county_2011_manual,by=c("NAME"="Geo_NAME"))
 
 ```
 
 ```{r,message=F, warning=F,results="hide"}
-##merge the 2011 tract data with the 2011 county data
+##merge the 2011 tract data with the 2011 county data 
 #first create a county column in tract dataset.
 tract_2011_join$CountyGEOID=36029
 tract_2011_join$Year=2011
@@ -240,11 +240,11 @@ tract_2011_join$Year=2011
 data2011=merge(tract_2011_join,county_2011_join,
                by.x = "CountyGEOID", by.y = "GEOID")
 # str(data2011)
-#the difference between data2011 and tract_county_2011 is the previous one's variables' name don't have year included (in order to append different years' data together in a long format)
+#the difference between data2011 and tract_county_2011 is the previous one's variables' name don't have year included (in order to append different years' data together in a long format) 
 ```
 
 ```{r,message=F, warning=F,results="hide"}
-###2010
+###2010 
 tract_2010 = get_acs(geography = "tract", state = "NY", 
                      county = "Erie", variables = c(TotalP_t="B01001_001",
                        TotalRace_t= "B02001_001",
@@ -295,44 +295,44 @@ county_2010 = get_acs(geography = "county", state = "NY",
 ```
 
 ```{r,message=F, warning=F,results="hide"}
-###make the tract data into wide format from the long format
+###make the tract data into wide format from the long format 
 tract_2010_noMOE=subset(tract_2010,select=-moe)
 tract_2010=spread(tract_2010_noMOE, key = variable, value = estimate)
 
-###make the county data into wide format from the long format
+###make the county data into wide format from the long format 
 county_2010_noMOE=subset(county_2010,select=-moe)
 county_2010=spread(county_2010_noMOE, key = variable, value = estimate)
 ```
 
 ```{r,message=F, warning=F,results="hide"}
-#######add Bachelor's degree manually (both for the county and tract level) from the census 2010 acs 5 year estimate survey 
-#######since there isn't any variable for the bachelor's degree for total population over 25 years old
+#######add Bachelor's degree manually (both for the county and tract level) from the census 2010 acs 5 year estimate survey  
+#######since there isn't any variable for the bachelor's degree for total population over 25 years old 
 
-##for tract new variables
+##for tract new variables 
 tract_2010_web=read.csv(file="Data/2010_tract_webinfo.csv")
 tract_2010_manual=tract_2010_web %>%
   subset(.data = tract_2010_web,select=c(Geo_NAME,SE_A12001_001,SE_A12001_005))
-##for county new variables
+##for county new variables 
 county_2010_web=read.csv(file="Data/2010_county_webinfo.csv")
 county_2010_manual=county_2010_web %>%
   subset(.data = county_2010_web,select=c(Geo_NAME,SE_A12001_001,SE_A12001_005))
 
-##rename the column, get rid of the variable id
+##rename the column, get rid of the variable id 
 tract_2010_manual=rename(tract_2010_manual, degreeTotal_t=SE_A12001_001,collegedegree_t=SE_A12001_005)
 county_2010_manual=rename(county_2010_manual, degreeTotal_c=SE_A12001_001,collegedegree_c=SE_A12001_005)
 ```
 
 ```{r,message=F, warning=F,results="hide"}
-###join the web tract and county education info with the original 2010 acs data
+###join the web tract and county education info with the original 2010 acs data 
 tract_2010_join=left_join(tract_2010,tract_2010_manual,by=c("NAME"="Geo_NAME"))
 county_2010_join=left_join(county_2010,county_2010_manual,by=c("NAME"="Geo_NAME"))
 
-##merge the 2010 tract data with the 2010 county data
+##merge the 2010 tract data with the 2010 county data 
 #first create a county column in tract dataset.
 tract_2010_join$CountyGEOID=36029
 tract_2010_join$Year=2010
-# view(tract_2010_join)
-#then merge the county dataset with the tract dataset
+# view(tract_2010_join) 
+#then merge the county dataset with the tract dataset 
 data2010=merge(tract_2010_join,county_2010_join,
                by.x = "CountyGEOID", by.y = "GEOID")
 
@@ -344,7 +344,7 @@ allyears=rbind(data2019,data2018,data2017,data2016,data2015, data2014, data2013,
 ```
 
 ```{r,message=F, warning=F,results="hide"}
-######################calculate the column percentages for county and tract levels
+######################calculate the column percentages for county and tract levels 
 allyears= transform(allyears,
                     pctNonWhite_t=(TotalRace_t-White_t)/TotalRace_t*100,
                     pctNonWhite_c=(TotalRace_c-White_c)/TotalRace_c*100,
@@ -365,9 +365,9 @@ allyears= transform(allyears,
                     pctProfjobs_c=Profjobs_c/jobsTotal_c*100,
                     pctPoverty_t=Poverty_t/PovertyTotal_t*100,
                     pctPoverty_c=Poverty_c/PovertyTotal_c*100)
-
-# head(allyears)
-# glimpse(allyears$medianGRent_c)
+ 
+# head(allyears) 
+# glimpse(allyears$medianGRent_c) 
 ```
 
 ```{r,message=F, warning=F,results="hide"}
@@ -385,7 +385,7 @@ allyears$Vul=ifelse(allyears$Vuldegree>=3,1,0)
 ```
 
 ```{r,message=F, warning=F,results='hide'}
-####getting across-time differences for counties and tracts
+####getting across-time differences for counties and tracts 
 year=rev(2010:2019)
 new.d.list=NULL
 length(year)
@@ -485,11 +485,11 @@ crime1 =
   transform(crime_initial,
             GEOID=censustract2010*100+36029000000,na.rm = FALSE
   )
-###2. get the Year column
+###2. get the Year column 
 class(crime1$crimedate)
 crime1$Year <- as.numeric(format(crime1$crimedate,'%Y'))
 
-####only select the tract number for merge with the main dataset
+####only select the tract number for merge with the main dataset 
 crime_formerge=crime1 %>% 
   select(day_of_week,parent_incident_type,GEOID,censustract2010,Year,latitude,longitude)
 crime_formerge$GEOID=as.character(crime_formerge$GEOID)
@@ -562,7 +562,7 @@ gentri_crime_tract_1=gentri_crime_tract_1[complete.cases(gentri_crime_tract_1[,"
 
 Add any additional processing steps here.
 
-# Results
+# Results 
 
 [~200 words]
 
@@ -842,12 +842,12 @@ map2019
 
 
 
-# Conclusions
+# Conclusions 
 
 [~200 words]
 
 Clear summary adequately describing the results and putting them in context. Discussion of further questions and ways to continue investigation.
 
-# References
+# References 
 
 All sources are cited in a consistent manner
