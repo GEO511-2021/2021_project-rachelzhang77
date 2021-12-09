@@ -37,6 +37,7 @@ library(tidyr)
 library(kableExtra)
 
 
+
 census_api_key(Sys.getenv("CENSUS_API_KEY"),install=TRUE, overwrite = TRUE)
 readRenviron("~/.Renviron")
 
