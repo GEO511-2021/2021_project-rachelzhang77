@@ -51,7 +51,7 @@ library(kableExtra)
 knitr::opts_chunk$set(cache=TRUE)  # cache the results for quick compiling
 ```
 
-## Download and clean all the required data. Got the variables from tidycensus that are related to gentrification measurement.
+Download and clean all the required data. Got the variables from tidycensus that are related to gentrification measurement.
 ```{r,message=F, warning=F,results="hide"}
 year=2012:2019
 tract.list=NULL
@@ -148,10 +148,10 @@ data2019=data.frame(tract_county_merge.list[8])
 ```{r,message=F, warning=F,results="hide"}
 #####Modified the 2011&2010 data since they don't have variables about education for total population. I manually imported them from social explorer (https://www.socialexplorer.com/reports-beta/report/a5c293b8-2709-11ec-aafd-132ea339dce2).
 ###2011
-tract_2011 = get_acs(geography = "tract", state = "NY", 
+tract_2011 = get_acs(geography = "tract", state = "NY",
                      county = "Erie", variables = c(TotalP_t="B01001_001",
                        TotalRace_t= "B02001_001",
-                                                    White_t="B02001_002",
+                                                    White_t="B02001_002", 
                                                     nonHispanicWhite_t="B03002_003",
                                                     nonHispanicWhiteTotal_t="B03002_001",
                                                     Homeowner_t="B25003_002",
@@ -568,7 +568,6 @@ gentri_crime_tract_1$parent_incident_type=recode(gentri_crime_tract_1$parent_inc
 # Results
 
 
-
 ```{r,message=F, warning=F,results="hide"}
 #get the crime rate for each type
 gentri_crime_quick=gentri_crime_tract_1 %>% 
@@ -594,41 +593,7 @@ Crimeoverall=gentri_crime_quick %>%
 Crimeoverall$Year=as.factor(Crimeoverall$Year)
 ```
 
-The Crime Trend in Buffalo from 2011-2019
-```{r,message=F, warning=F}
-
-df1=gather(Crimeoverall,key = crimetypes, value=crimerates,-Year) %>% 
-  mutate(crimetypes=recode(crimetypes,"CrimeRate"="OverallCrimeRate")) #change the variable text
-ggplot(df1,aes(x=Year,y=crimerates,group=crimetypes,color=crimetypes))+
-  geom_point()+
-  geom_line()+
-  theme(axis.text.x = element_text(size = 6),
-    legend.title = element_text(size = 6), 
-    legend.box.margin=margin(-10,-10,-10,-10),
-        legend.text = element_text(size = 6),
-    legend.position = "right")
-```
-Overall decline with some fluctuations between 2011 and 2019. (Except Break and Enter, Homicide, and Sexual Offense and Sexual Assault).
-
-
-```{r,message=F, warning=F}
-# #Then I run a regression for each nested tibble using purrr::map:
-forcorr=gentri_crime_quick %>%
-  group_by(GEOID,Year,parent_incident_type,GenDegree,Vul,Dem,HousingMarket,Vuldegree,Demdegree,HousingMarketDegree) %>%
-  summarise(count=n(),
-            rate=mean(count/TotalP_t*1000)
-  )
-forcorr$Year=as.factor(forcorr$Year)
-forcorr$rate.log=log(forcorr$rate) #logged the crime rate
-
-library(broom)
-a=lm(data=forcorr,rate.log~GenDegree+Year)
-summary(a)
-
-
-```
-
-Gentrification degree maps in 2011, 2015, 2019
+##Gentrification degree maps in 2011, 2015, 2019
 ```{r,message=FALSE,warning=FALSE}
 ####mapping
 mapdf=gentri_crime_tract_1 %>% 
@@ -692,7 +657,25 @@ ggplot(data = mapdf, aes(fill=GenDegree2)) + geom_sf()+
 
 ```
 
-Gentrification and Crime in Buffalo in 2019
+##The Crime Trend in Buffalo from 2011-2019
+```{r,message=F, warning=F}
+
+df1=gather(Crimeoverall,key = crimetypes, value=crimerates,-Year) %>% 
+  mutate(crimetypes=recode(crimetypes,"CrimeRate"="OverallCrimeRate")) #change the variable text
+ggplot(df1,aes(x=Year,y=crimerates,group=crimetypes,color=crimetypes))+
+  geom_point()+
+  geom_line()+
+  theme(axis.text.x = element_text(size = 6),
+    legend.title = element_text(size = 6), 
+    legend.box.margin=margin(-10,-10,-10,-10),
+        legend.text = element_text(size = 6),
+    legend.position = "right")
+```
+Overall decline with some fluctuations between 2011 and 2019. (Except Break and Enter, Homicide, and Sexual Offense and Sexual Assault).
+
+
+
+##Gentrification and Crime in Buffalo in 2019
 ```{r,message=F, warning=F}
 Gen_crimemap2019=ggplot()+
   geom_sf(data=select(mapdf,-parent_incident_type), aes(fill=GenDegree))+
@@ -704,6 +687,25 @@ Gen_crimemap2019=ggplot()+
 
 ggsave("Gentirifcation&CrimeMap2019.png",width = 8.1,height = 8)
 Gen_crimemap2019
+```
+
+##Regression
+  Regress gentrification degree on crime from 2011 to 2019
+```{r,message=F, warning=F}
+# #Then I run a regression for each nested tibble using purrr::map:
+forcorr=gentri_crime_quick %>%
+  group_by(GEOID,Year,parent_incident_type,GenDegree,Vul,Dem,HousingMarket,Vuldegree,Demdegree,HousingMarketDegree) %>%
+  summarise(count=n(),
+            rate=mean(count/TotalP_t*1000)
+  )
+forcorr$Year=as.factor(forcorr$Year)
+forcorr$rate.log=log(forcorr$rate) #logged the crime rate
+
+library(broom)
+a=lm(data=forcorr,rate.log~GenDegree+Year)
+summary(a)
+
+
 ```
 
 Regress the specific gentrification mechanisms between tracts
