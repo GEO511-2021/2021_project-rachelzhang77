@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Rachel Zhang" />
+
+
+<title>Gentrification and Crime in Buffalo, NY</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+      .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Spatial Data Science Final Project</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Gentrification and Crime in Buffalo, NY</h1>
+<h4 class="author">Rachel Zhang</h4>
+
+</div>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<pre><code>The surgent growth of gentrification across cities since the 1970s has received increased attention from American society. Research demonstrates gentrification has significantly changed — for better or worse —neighborhood socioeconomic characteristics. Besides, this city redevelopment trend has nearly coincided with the U.S. crime changes in the late 20th century — the crime rates in major U.S. cities increased from the 1960s to the 1980s and then experienced a considerable drop during the 1990s (Barton 2016b). However, scholars have spent limited resources in studying the relationship between gentrification and crime. Considering the widespread gentrification phenomenon and the growing importance of crime occurrences in the U.S., it is essential to explore the association between these two compelling trends.
+Due to the inconsistent operationalizations and limited methodological approaches in the fields of gentrification and crime, the few studies on their relationship have drawn conflicting conclusions. Several scholars have concluded that there is a positive relationship between gentrification and crime due to the incomplete neighborhood transformation, the disruption of the established social order, or the aggregation of suitable and lucrative targets — the move-in middle-class residents, in gentrifying inner-city neighborhoods (Covington and Taylor 1989). Other studies have argued that gentrification is accompanied by decreasing neighborhood crime rates through establishing relatively stable areas with the influx of economically advantaged residents (Barton 2016; MacDonald and Stokes 2020; Papachristos et al. 2011). The incompatible findings can be attributed to the inconsistent measurement of gentrification, temporal variations, and different analytical approaches. Also, little research has assessed what is the underlying gentrification mechanisms affecting neighborhood crime. My research intends to fill the research gaps by examining the overall association between gentrification using a comprehensive gentrification measurement. I also examine the association between specific gentrification mechanisms and crime. Specifically, my study attempts to examine the impact of different degrees and aspects of gentrification on neighborhood crime changes at the census tract level in Buffalo, NY, by using a modified quantitative measurement and neighborhood typology.</code></pre>
+</div>
+<div id="data-and-methods" class="section level1">
+<h1>Data and Methods</h1>
+<pre><code>The current study examined the association of gentrification and seven (?) forms of violent crime in Buffalo, NY for the period 2011 to 2019 at census tract level. This objective was achieved by utilizing two steps. First, the quantitative operationalization of gentrification and the typology of gentrification degree were based on changes in sociodemographic and socioeconomic characteristics in Buffalo, NY (79 tracts) from 2011 to 2019 American Community Survey 1-year Estimate data. Second, correlation in gentrification and crime over this 9-year period was examined to determine whether the association in Buffalo (79 tracts) was varied over time, which was important given the dynamic nature of gentrification. The Ordinary Least Squares Regression (OLS), controlling between-unit variation, is applied here to examine the association between gentrification and crime.</code></pre>
+<p>Dependent Variables: Violent Index Crimes For the crime data, I use the open dataset called Crime Incidents by Open Data Buffalo with public access on their official website (data.buffalony.gov), where data is provided by the Buffalo Police Department. This dataset is updated daily and provides the crime incidents in Buffalo at the census tract level from 2009 to 2021. The dependent variable is the total crime rate per 1,000 tract residents in Buffalo from 2011-2019. I also examined seven different violent crime and property crime, including assault, robbery, homicide, sexual assault, sexual offense, theft, and theft of vehicle.</p>
+<p>Operationalization of Gentrification To measure the stages of gentrification, I use a case study of Buffalo, New York with 79 census tracts. Specifically, I use the American Community Survey 1-year estimates from 2011 to 2019. To further evaluate the influence of various gentrification stages, I also conduct a gentrification stage analysis by creating three major gentrification indexes, including the presence of vulnerable populations, gentrification-related demographic changes, and housing condition changes. Moreover, I make use of a neighborhood typology for categorizing the specific stages.</p>
+<pre class="r"><code>library(tidycensus)
+library(sf)
+library(tidyverse)
+library(haven)
+library(viridis)
+library(leaflet)
+library(tidyr)
+library(kableExtra)
+
+
+
+census_api_key(Sys.getenv(&quot;CENSUS_API_KEY&quot;),install=TRUE, overwrite = TRUE)</code></pre>
+<pre><code>## [1] &quot;7e9b9dfdae5d56fbf2a5c8e243c74bccbe74af98&quot;</code></pre>
+<pre class="r"><code>readRenviron(&quot;~/.Renviron&quot;)</code></pre>
+<pre class="r"><code>library(tidyverse)
+library(leaflet)
+library(kableExtra)
+knitr::opts_chunk$set(cache=TRUE)  # cache the results for quick compiling</code></pre>
+<p>Download and clean all the required data. Got the variables from tidycensus that are related to gentrification measurement.</p>
+<pre class="r"><code>year=2012:2019
+tract.list=NULL
+county.list=NULL
+tract_county_merge.list=NULL
+for (i in 1:8){
+  d1= get_acs(geography = &quot;tract&quot;, state = &quot;NY&quot;,
+              county = &quot;Erie&quot;, variables = c(TotalP_t=&quot;B01001_001&quot;,
+                TotalRace_t= &quot;B02001_001&quot;,
+                                             White_t=&quot;B02001_002&quot;,
+                                             nonHispanicWhite_t=&quot;B03002_003&quot;,
+                                             nonHispanicWhiteTotal_t=&quot;B03002_001&quot;,
+                                             Homeowner_t=&quot;B25003_002&quot;,
+                                             renterHS_t=&quot;B25003_003&quot;,
+                                             TenureHSTotal_t=&quot;B25003_001&quot;,
+                                             collegedegree_t=&quot;B15003_022&quot;,
+                                             degreeTotal_t=&quot;B15003_001&quot;,
+                                             # HSIncome_t=c(&quot;B19001_001&quot;,&quot;B19001_002&quot;,&quot;B19001_003&quot;,&quot;B19001_004&quot;,&quot;B19001_005&quot;,&quot;B19001_006&quot;,&quot;B19001_007&quot;,&quot;B19001_008&quot;,&quot;B19001_009&quot;),##how to do it in a quicker way??
+                                             medianHSincome_t=&quot;B19013_001&quot;,
+                                             medianHValue_t=&quot;B25077_001&quot;,
+                                             medianGRent_t=&quot;B25064_001&quot;,
+                                             Poverty_t=&quot;B17001_002&quot;,
+                                             PovertyTotal_t=&quot;B17001_001&quot;,
+                                             ForeignBorn_t=&quot;B05002_009&quot;,
+                                             NavitityTotal_t=&quot;B05002_001&quot;,
+                                             Profjobs_t=&quot;C24070_010&quot;,
+                                             jobsTotal_t=&quot;C24070_001&quot;
+              ),year=year[i],geometry = TRUE,
+              cache_table=T)
+  # create a county column in tract dataset for the later merge with county data.
+  d1$CountyGEOID=36029
+  d1$Year=year[i]
+  tract.list[i]=list(d1)
+  
+  d2 = get_acs(geography = &quot;county&quot;, state = &quot;NY&quot;,
+               county = &quot;Erie&quot;, variables = c(TotalP_c=&quot;B01001_001&quot;,
+                 TotalRace_c= &quot;B02001_001&quot;,
+                                              White_c=&quot;B02001_002&quot;,
+                                              nonHispanicWhite_c=&quot;B03002_003&quot;,
+                                              nonHispanicWhiteTotal_c=&quot;B03002_001&quot;,
+                                              Homeowner_c=&quot;B25003_002&quot;,
+                                              renterHS_c=&quot;B25003_003&quot;,
+                                              TenureHSTotal_c=&quot;B25003_001&quot;,
+                                              collegedegree_c=&quot;B15003_022&quot;,
+                                              degreeTotal_c=&quot;B15003_001&quot;,
+                                              # HSIncome_c=c(&quot;B19001_001&quot;,&quot;B19001_002&quot;,&quot;B19001_003&quot;,&quot;B19001_004&quot;,&quot;B19001_005&quot;,&quot;B19001_006&quot;,&quot;B19001_007&quot;,&quot;B19001_008&quot;,&quot;B19001_009&quot;),##how to do it in a quicker way??
+                                              medianHSincome_c=&quot;B19013_001&quot;,
+                                              medianHValue_c=&quot;B25077_001&quot;,
+                                              medianGRent_c=&quot;B25064_001&quot;,
+                                              Poverty_c=&quot;B17001_002&quot;,
+                                              PovertyTotal_c=&quot;B17001_001&quot;,
+                                              ForeignBorn_c=&quot;B05002_009&quot;,
+                                              NavitityTotal_c=&quot;B05002_001&quot;,
+                                              Profjobs_c=&quot;C24070_010&quot;,
+                                              jobsTotal_c=&quot;C24070_001&quot;
+               ),year=year[i],geometry = FALSE,
+               cache_table=T)
+  
+  county.list[i]=list(d2)
+  
+  ###make the tract data into wide format from the long format
+  
+  
+  d1_noMOE=subset(d1,select=-moe)
+  d1=spread(d1_noMOE, key = variable, value = estimate)
+  
+  
+  ###make the county data into wide format from the long format
+  d2_noMOE=subset(d2,select=-moe)
+  d2=spread(d2_noMOE, key = variable, value = estimate)
+  
+  
+  #then merge the county dataset with the tract dataset
+  d_merge=merge(d1,d2,
+                by.x = &quot;CountyGEOID&quot;, by.y = &quot;GEOID&quot;)
+  # str(d_merge)
+  
+  tract_county_merge.list[i]=list(d_merge)
+}</code></pre>
+<pre class="r"><code>##change it to dataframe
+data2012=data.frame(tract_county_merge.list[1])
+data2013=data.frame(tract_county_merge.list[2])
+data2014=data.frame(tract_county_merge.list[3])
+data2015=data.frame(tract_county_merge.list[4])
+data2016=data.frame(tract_county_merge.list[5])
+data2017=data.frame(tract_county_merge.list[6])
+data2018=data.frame(tract_county_merge.list[7])
+data2019=data.frame(tract_county_merge.list[8])</code></pre>
+<pre class="r"><code>#####Modified the 2011&amp;2010 data since they don&#39;t have variables about education for total population. I manually imported them from social explorer (https://www.socialexplorer.com/reports-beta/report/a5c293b8-2709-11ec-aafd-132ea339dce2).
+###2011
+tract_2011 = get_acs(geography = &quot;tract&quot;, state = &quot;NY&quot;,
+                     county = &quot;Erie&quot;, variables = c(TotalP_t=&quot;B01001_001&quot;,
+                       TotalRace_t= &quot;B02001_001&quot;,
+                                                    White_t=&quot;B02001_002&quot;, 
+                                                    nonHispanicWhite_t=&quot;B03002_003&quot;,
+                                                    nonHispanicWhiteTotal_t=&quot;B03002_001&quot;,
+                                                    Homeowner_t=&quot;B25003_002&quot;,
+                                                    renterHS_t=&quot;B25003_003&quot;,
+                                                    TenureHSTotal_t=&quot;B25003_001&quot;,
+                                                    ##collegedegree_t=&quot;B15003_022&quot;,
+                                                    ##degreeTotal_t=&quot;B15003_001&quot;, no B15003 variable in acs 2011 dataset
+                                                    medianHSincome_t=&quot;B19013_001&quot;,
+                                                    medianHValue_t=&quot;B25077_001&quot;,
+                                                    medianGRent_t=&quot;B25064_001&quot;,
+                                                    Poverty_t=&quot;B17001_002&quot;,
+                                                    PovertyTotal_t=&quot;B17001_001&quot;,
+                                                    ForeignBorn_t=&quot;B05002_009&quot;,
+                                                    NavitityTotal_t=&quot;B05002_001&quot;,
+                                                    Profjobs_t=&quot;C24070_010&quot;,
+                                                    jobsTotal_t=&quot;C24070_001&quot;
+                     ),year=2011,geometry = TRUE, 
+                     cache_table=T)
+
+
+county_2011 = get_acs(geography = &quot;county&quot;, state = &quot;NY&quot;, 
+                      county = &quot;Erie&quot;, variables = c(TotalP_c=&quot;B01001_001&quot;,
+                        TotalRace_c= &quot;B02001_001&quot;,
+                                                     White_c=&quot;B02001_002&quot;,
+                                                     nonHispanicWhite_c=&quot;B03002_003&quot;,
+                                                     nonHispanicWhiteTotal_c=&quot;B03002_001&quot;,
+                                                     Homeowner_c=&quot;B25003_002&quot;,
+                                                     renterHS_c=&quot;B25003_003&quot;,
+                                                     TenureHSTotal_c=&quot;B25003_001&quot;,
+                                                     ##collegedegree_c=&quot;B15003_022&quot;,
+                                                     ##degreeTotal_c=&quot;B15003_001&quot;,
+                                                     medianHSincome_c=&quot;B19013_001&quot;,
+                                                     medianHValue_c=&quot;B25077_001&quot;,
+                                                     medianGRent_c=&quot;B25064_001&quot;,
+                                                     Poverty_c=&quot;B17001_002&quot;,
+                                                     PovertyTotal_c=&quot;B17001_001&quot;,
+                                                     ForeignBorn_c=&quot;B05002_009&quot;,
+                                                     NavitityTotal_c=&quot;B05002_001&quot;,
+                                                     Profjobs_c=&quot;C24070_010&quot;,
+                                                     jobsTotal_c=&quot;C24070_001&quot;
+                      ),year=2011,geometry = FALSE, 
+                      cache_table=T)
+
+###make the tract data into wide format from the long format
+tract_2011_noMOE=subset(tract_2011,select=-moe)
+tract_2011=spread(tract_2011_noMOE, key = variable, value = estimate)
+
+###make the county data into wide format from the long format
+county_2011_noMOE=subset(county_2011,select=-moe)
+county_2011=spread(county_2011_noMOE, key = variable, value = estimate)</code></pre>
+<pre class="r"><code>#######add Bachelor&#39;s degree manually (both for the county and tract level) from the census 2011 acs 5 year estimate survey 
+#######since there isn&#39;t any variable for the bachelor&#39;s degree for total population over 25 years old
+
+##for tract new variables
+tract_2011_web=read.csv(&quot;Data/R12919572_SL140.csv&quot;)
+tract_2011_manual=tract_2011_web %&gt;%
+  subset(.data = tract_2011_web,select=c(Geo_NAME,SE_A12001_001,SE_A12001_005))
+##for county new variables
+county_2011_web=read.csv(file=&quot;Data/R12919572_SL050.csv&quot;)
+county_2011_manual=county_2011_web %&gt;%
+  subset(.data = county_2011_web,select=c(Geo_NAME,SE_A12001_001,SE_A12001_005))
+
+##rename the column, get rid of the variable id
+tract_2011_manual=rename(tract_2011_manual, degreeTotal_t=SE_A12001_001,collegedegree_t=SE_A12001_005)
+county_2011_manual=rename(county_2011_manual, degreeTotal_c=SE_A12001_001,collegedegree_c=SE_A12001_005)
+
+###join the web tract and county education info with the original 2011 acs data
+tract_2011_join=left_join(tract_2011,tract_2011_manual,by=c(&quot;NAME&quot;=&quot;Geo_NAME&quot;))
+county_2011_join=left_join(county_2011,county_2011_manual,by=c(&quot;NAME&quot;=&quot;Geo_NAME&quot;))</code></pre>
+<pre class="r"><code>##merge the 2011 tract data with the 2011 county data
+#first create a county column in tract dataset.
+tract_2011_join$CountyGEOID=36029
+tract_2011_join$Year=2011
+#then merge the county dataset with the tract dataset
+data2011=merge(tract_2011_join,county_2011_join,
+               by.x = &quot;CountyGEOID&quot;, by.y = &quot;GEOID&quot;)
+# str(data2011)
+#the difference between data2011 and tract_county_2011 is the previous one&#39;s variables&#39; name don&#39;t have year included (in order to append different years&#39; data together in a long format)</code></pre>
+<pre class="r"><code>### Modified the 2010 data.
+tract_2010 = get_acs(geography = &quot;tract&quot;, state = &quot;NY&quot;, 
+                     county = &quot;Erie&quot;, variables = c(TotalP_t=&quot;B01001_001&quot;,
+                       TotalRace_t= &quot;B02001_001&quot;,
+                                                    White_t=&quot;B02001_002&quot;,
+                                                    nonHispanicWhite_t=&quot;B03002_003&quot;,
+                                                    nonHispanicWhiteTotal_t=&quot;B03002_001&quot;,
+                                                    Homeowner_t=&quot;B25003_002&quot;,
+                                                    renterHS_t=&quot;B25003_003&quot;,
+                                                    TenureHSTotal_t=&quot;B25003_001&quot;,
+                                                    ###collegedegree_t=&quot;B15003_022&quot;,
+                                                    ###degreeTotal_t=&quot;B15003_001&quot;,
+                                                    # HSIncome_t=c(&quot;B19001_001&quot;,&quot;B19001_002&quot;,&quot;B19001_003&quot;,&quot;B19001_004&quot;,&quot;B19001_005&quot;,&quot;B19001_006&quot;,&quot;B19001_007&quot;,&quot;B19001_008&quot;,&quot;B19001_009&quot;),##how to do it in a quicker way??
+                                                    medianHSincome_t=&quot;B19013_001&quot;,
+                                                    medianHValue_t=&quot;B25077_001&quot;,
+                                                    medianGRent_t=&quot;B25064_001&quot;,
+                                                    Poverty_t=&quot;B17001_002&quot;,
+                                                    PovertyTotal_t=&quot;B17001_001&quot;,
+                                                    ForeignBorn_t=&quot;B05002_009&quot;,
+                                                    NavitityTotal_t=&quot;B05002_001&quot;,
+                                                    Profjobs_t=&quot;C24070_010&quot;,
+                                                    jobsTotal_t=&quot;C24070_001&quot;
+                     ),year=2010,geometry = TRUE, 
+                     cache_table=T)
+
+county_2010 = get_acs(geography = &quot;county&quot;, state = &quot;NY&quot;, 
+                      county = &quot;Erie&quot;, variables = c(TotalP_c=&quot;B01001_001&quot;,
+                        TotalRace_c= &quot;B02001_001&quot;,
+                                                     White_c=&quot;B02001_002&quot;,
+                                                     nonHispanicWhite_c=&quot;B03002_003&quot;,
+                                                     nonHispanicWhiteTotal_c=&quot;B03002_001&quot;,
+                                                     Homeowner_c=&quot;B25003_002&quot;,
+                                                     renterHS_c=&quot;B25003_003&quot;,
+                                                     TenureHSTotal_c=&quot;B25003_001&quot;,
+                                                     ###collegedegree_c=&quot;B15003_022&quot;,
+                                                     ###degreeTotal_c=&quot;B15003_001&quot;,
+                                                     medianHSincome_c=&quot;B19013_001&quot;,
+                                                     medianHValue_c=&quot;B25077_001&quot;,
+                                                     medianGRent_c=&quot;B25064_001&quot;,
+                                                     Poverty_c=&quot;B17001_002&quot;,
+                                                     PovertyTotal_c=&quot;B17001_001&quot;,
+                                                     ForeignBorn_c=&quot;B05002_009&quot;,
+                                                     NavitityTotal_c=&quot;B05002_001&quot;,
+                                                     Profjobs_c=&quot;C24070_010&quot;,
+                                                     jobsTotal_c=&quot;C24070_001&quot;
+                      ),year=2010,geometry = FALSE, 
+                      cache_table=T)</code></pre>
+<pre class="r"><code>###make the tract data into wide format from the long format
+tract_2010_noMOE=subset(tract_2010,select=-moe)
+tract_2010=spread(tract_2010_noMOE, key = variable, value = estimate)
+
+###make the county data into wide format from the long format
+county_2010_noMOE=subset(county_2010,select=-moe)
+county_2010=spread(county_2010_noMOE, key = variable, value = estimate)</code></pre>
+<pre class="r"><code>#######add Bachelor&#39;s degree manually (both for the county and tract level) from the census 2010 acs 5 year estimate survey 
+#######since there isn&#39;t any variable for the bachelor&#39;s degree for total population over 25 years old
+
+##for tract new variables
+tract_2010_web=read.csv(file=&quot;Data/2010_tract_webinfo.csv&quot;)
+tract_2010_manual=tract_2010_web %&gt;%
+  subset(.data = tract_2010_web,select=c(Geo_NAME,SE_A12001_001,SE_A12001_005))
+##for county new variables
+county_2010_web=read.csv(file=&quot;Data/2010_county_webinfo.csv&quot;)
+county_2010_manual=county_2010_web %&gt;%
+  subset(.data = county_2010_web,select=c(Geo_NAME,SE_A12001_001,SE_A12001_005))
+
+##rename the column, get rid of the variable id
+tract_2010_manual=rename(tract_2010_manual, degreeTotal_t=SE_A12001_001,collegedegree_t=SE_A12001_005)
+county_2010_manual=rename(county_2010_manual, degreeTotal_c=SE_A12001_001,collegedegree_c=SE_A12001_005)</code></pre>
+<pre class="r"><code>###join the web tract and county education info with the original 2010 acs data
+tract_2010_join=left_join(tract_2010,tract_2010_manual,by=c(&quot;NAME&quot;=&quot;Geo_NAME&quot;))
+county_2010_join=left_join(county_2010,county_2010_manual,by=c(&quot;NAME&quot;=&quot;Geo_NAME&quot;))
+
+##merge the 2010 tract data with the 2010 county data
+#first create a county column in tract dataset.
+tract_2010_join$CountyGEOID=36029
+tract_2010_join$Year=2010
+# view(tract_2010_join)
+#then merge the county dataset with the tract dataset
+data2010=merge(tract_2010_join,county_2010_join,
+               by.x = &quot;CountyGEOID&quot;, by.y = &quot;GEOID&quot;)</code></pre>
+<pre class="r"><code># append all year datasets together
+allyears=rbind(data2019,data2018,data2017,data2016,data2015, data2014, data2013, data2012, data2011, data2010)</code></pre>
+<pre class="r"><code>######################calculate the column percentages for county and tract levels
+allyears= transform(allyears,
+                    pctNonWhite_t=(TotalRace_t-White_t)/TotalRace_t*100,
+                    pctNonWhite_c=(TotalRace_c-White_c)/TotalRace_c*100,
+                    pctnonHisWhite_t=nonHispanicWhite_t/nonHispanicWhiteTotal_t*100,
+                    pctnonHisWhite_c=nonHispanicWhite_c/nonHispanicWhiteTotal_c*100,
+                    ###lowmedHSInc_tract is household income below 80% of the county median
+                    # low_medHSInc_c=0.8*medianHSincome_c,
+                    pctForeign_born_t=ForeignBorn_t/NavitityTotal_t*100,
+                    pctForeign_born_c=ForeignBorn_c/NavitityTotal_c*100,
+                    pctBachelor_t=collegedegree_t/degreeTotal_t*100,
+                    pctBachelor_c=collegedegree_c/degreeTotal_c*100,
+                    pctHowners_t=Homeowner_t/TenureHSTotal_t*100,
+                    pctHowners_c=Homeowner_c/TenureHSTotal_c*100,
+                    pctRenters_t=renterHS_t/TenureHSTotal_t*100,
+                    pctRenters_c=renterHS_c/TenureHSTotal_c*100,
+                    pctProfjobs_t=Profjobs_t/jobsTotal_t*100,
+                    pctProfjobs_c=Profjobs_c/jobsTotal_c*100,
+                    pctPoverty_t=Poverty_t/PovertyTotal_t*100,
+                    pctPoverty_c=Poverty_c/PovertyTotal_c*100)</code></pre>
+<pre class="r"><code>####compare the tract level data with the county level data for dynamic gentrification measurement, if true, then 1; if false, then 0.
+allyears=allyears %&gt;% 
+  mutate(&quot;pctRenters_abovecounty&quot; = ifelse(pctRenters_t&gt;pctRenters_c,1,0),
+         &quot;pctNonWhite_abovecounty&quot;=ifelse(pctNonWhite_t&gt;pctNonWhite_c,1,0),
+         &quot;pctBach_belowcounty&quot;=ifelse(pctBachelor_t&lt;pctBachelor_c,1,0),
+         &quot;pctForeignBorn_abovecounty&quot;=ifelse(pctForeign_born_t&gt;pctForeign_born_c,1,0),
+         &quot;pctPoverty_abovecounty&quot;=ifelse(pctPoverty_t&gt;pctPoverty_c,1,0)) ###not using low income household anymore.
+# construct the first gentrification index: Vulnerable by adding the column from 59 to column 63, which are the above five indicators.
+allyears$Vuldegree &lt;- rowSums(allyears[ , c(61:65)], na.rm=FALSE)
+allyears$Vul=ifelse(allyears$Vuldegree&gt;=3,1,0)</code></pre>
+<pre class="r"><code>####getting cross-time differences for counties and tracts
+year=rev(2010:2019)
+new.d.list=NULL
+length(year)
+for (i in 1:9){
+  a=year[i];b=year[i]-1
+  d1&lt;-subset(allyears, Year==year[i]) %&gt;% 
+    select(GEOID,pctHowners_t,pctHowners_c,pctNonWhite_t,pctNonWhite_c,pctBachelor_t,pctBachelor_c,medianHSincome_t,medianHSincome_c,pctForeign_born_t,pctForeign_born_c,pctProfjobs_t,pctProfjobs_c,
+           medianHValue_t,medianHValue_c,medianGRent_t,medianGRent_c)
+  d2=subset(allyears, Year==year[i]-1) %&gt;% 
+    select(GEOID,pctHowners_t,pctHowners_c,pctNonWhite_t,pctNonWhite_c,pctBachelor_t,pctBachelor_c,medianHSincome_t,medianHSincome_c,pctForeign_born_t,pctForeign_born_c,pctProfjobs_t,pctProfjobs_c,
+           medianHValue_t,medianHValue_c,medianGRent_t,medianGRent_c)
+  d3=cbind(GEOID=d1[ ,1],d1[,-c(1)]-d2[,-c(1)]) ###subtract two datasets except the &quot;GEOID&quot; column
+  
+  colnames(d3)&lt;-   ###need to rename the variables as td
+    paste(colnames(d3),&quot;td&quot;,sep = &quot;_&quot;)
+  
+  new.d.list[i]=list(d3)
+}
+change2019=data.frame(new.d.list[1])
+change2019$Year=2019
+
+change2018=data.frame(new.d.list[2])
+change2018$Year=2018
+
+change2017=data.frame(new.d.list[3])
+change2017$Year=2017
+
+change2016=data.frame(new.d.list[4])
+change2016$Year=2016
+
+change2015=data.frame(new.d.list[5])
+change2015$Year=2015
+
+change2014=data.frame(new.d.list[6])
+change2014$Year=2014
+
+change2013=data.frame(new.d.list[7])
+change2013$Year=2013
+
+change2012=data.frame(new.d.list[8])
+change2012$Year=2012
+
+change2011=data.frame(new.d.list[9])
+change2011$Year=2011
+
+#append all years&#39;changes data together
+allchanges=rbind(change2019,change2018,change2017,change2016,change2015, change2014, change2013, change2012, change2011)
+
+##merge data
+allchanges_merge=left_join(x=allyears,y=allchanges,
+                           by=c(&quot;GEOID&quot;= &quot;GEOID_td&quot;,&quot;Year&quot;=&quot;Year&quot;))
+##drop the 2010 data since it doesn&#39;t have changes compared with the previous years (no 2009 data) by using subset
+#remove(allyearchanges_merge)
+yearswchanges=subset(allchanges_merge,Year!=2010)</code></pre>
+<pre class="r"><code>###Compare the time difference at tract level with the county level
+##2. Second index of gentrification: Demographic changes between the year and the previous year
+yearswchanges=yearswchanges %&gt;% 
+  mutate(&quot;pctchan_Howners_abovecounty&quot; = ifelse(pctHowners_t_td&gt;pctHowners_c_td,1,0),
+         &quot;pctchan_nonHisWhite_abcounty&quot;=ifelse(pctNonWhite_t_td&gt;pctNonWhite_c_td,1,0),
+         &quot;pctchan_Bach_abcounty&quot;=ifelse(pctBachelor_t_td&lt;pctBachelor_c_td,1,0),
+         &quot;change_medHSInc_abcounty&quot;=ifelse(medianHSincome_t_td&gt;medianHSincome_c_td,1,0),
+         &quot;pctchange_ForeignB_abcounty&quot;=ifelse(pctForeign_born_t_td&gt;pctForeign_born_c_td,1,0),
+         &quot;pctchange_Prof_abovecounty&quot;=ifelse(pctProfjobs_t_td&gt;pctProfjobs_c_td,1,0))
+
+##construct the second gentrification index: Dem changes
+yearswchanges$Demdegree &lt;- rowSums(yearswchanges[ , c(84:89)], na.rm=FALSE)
+yearswchanges$WhiteandBachIncrease=rowSums(yearswchanges[,c(85,86)], na.rm=FALSE)
+yearswchanges=yearswchanges %&gt;% 
+  # mutate(Dem=ifelse(Demdegree&gt;=4|WhiteandBachIncrease==2,1,0))
+  mutate(Dem=ifelse(Demdegree&gt;=4|WhiteandBachIncrease==2,1,0))
+
+##3. Housing Market condition
+yearswchanges=yearswchanges %&gt;% 
+  mutate(&quot;change_medHSValue_abcounty&quot;=ifelse(medianHValue_t_td&gt;medianHValue_c_td,1,0),
+         &quot;change_medGrossRent_abcounty&quot;=ifelse(medianGRent_t_td&gt;medianGRent_c_td,1,0))
+##construct the third gentrification index: Housing Market Condition Changes
+yearswchanges$HousingMarketDegree=rowSums(yearswchanges[ , c(93:94)], na.rm=FALSE)
+yearswchanges=yearswchanges %&gt;% 
+  mutate(&quot;HousingMarket&quot;=ifelse(HousingMarketDegree==2,1,0))</code></pre>
+<pre class="r"><code>################import the crime data from STATA
+crime_initial=read_dta(file = &quot;Data/BuffaloCrime_tract_since2011.dta&quot;) %&gt;% 
+  select(address,zip,latitude,longitude,day_of_week,parent_incident_type,neighborhood,censustract2010,crimedate,crimetime)
+
+####getting crime data ready, for having GEOID and have the Year column for merge
+##1.set the tract number as numeric to become the same version of GEOID
+crime_initial$censustract2010=
+  as.numeric(crime_initial$censustract2010,na.rm = TRUE)
+class(crime_initial$censustract2010)
+
+crime1 =
+  transform(crime_initial,
+            GEOID=censustract2010*100+36029000000,na.rm = FALSE
+  )
+###2. get the Year column
+class(crime1$crimedate)
+crime1$Year &lt;- as.numeric(format(crime1$crimedate,&#39;%Y&#39;))
+
+####only select the tract number for merge with the main dataset
+crime_formerge=crime1 %&gt;% 
+  select(day_of_week,parent_incident_type,GEOID,censustract2010,Year,latitude,longitude)
+crime_formerge$GEOID=as.character(crime_formerge$GEOID)
+
+####merge the main dataset with the crime dataset
+gentri_crime_tract=left_join(yearswchanges,crime_formerge,c(&quot;GEOID&quot;,&quot;Year&quot;))
+
+v1=
+  c(&quot;GEOID&quot;,&quot;Year&quot;,&quot;Vul&quot;,&quot;Dem&quot;,&quot;Demdegree&quot;,&quot;WhiteandBachIncrease&quot;,&quot;HousingMarket&quot;,&quot;medianGRent_c&quot;,&quot;medianGRent_t&quot;,&quot;medianHValue_c&quot;,&quot;medianHValue_t&quot;,&quot;geometry&quot;)
+
+###Construct the gentrification stages.
+genD=yearswchanges[,v1]
+genD=genD %&gt;% 
+  mutate(&quot;Susceptible&quot;=ifelse(is.na(Vul)|is.na(Dem)|is.na(HousingMarket),NA,0),
+         &quot;Susceptible&quot;=ifelse(genD$Vul==1&amp;genD$Dem==0&amp;genD$HousingMarket==0&amp;(medianGRent_t&lt;medianGRent_c)&amp;(genD$medianHValue_t&lt;genD$medianHValue_c),1,Susceptible),
+         &quot;Early_Prop&quot;=ifelse(is.na(Vul)|is.na(Dem)|is.na(HousingMarket),NA,0),
+         &quot;Early_Prop&quot;=ifelse(genD$Vul==1 &amp;genD$Dem==0&amp;genD$HousingMarket==1&amp;(medianGRent_t&lt;medianGRent_c)&amp;(genD$medianHValue_t&lt;genD$medianHValue_c),1,Early_Prop),
+         &quot;Early_Demo&quot;=ifelse(is.na(Vul)|is.na(Dem)|is.na(HousingMarket),NA,0),
+         &quot;Early_Demo&quot;=ifelse(genD$Vul==1 &amp;genD$Dem==1&amp;genD$HousingMarket==0&amp;genD$medianGRent_t&lt;genD$medianGRent_c,1,Early_Demo),
+         &quot;Early_Demo&quot;=ifelse(genD$Vul==1 &amp;genD$Dem==1&amp;genD$HousingMarket==0&amp;genD$medianHValue_t&lt;genD$medianHValue_c,1,Early_Demo),
+         &quot;Middle&quot;=ifelse(is.na(Vul)|is.na(Dem)|is.na(HousingMarket),NA,0),
+         &quot;Middle&quot;=ifelse(genD$Vul==1 &amp;genD$Dem==1&amp;genD$HousingMarket==1&amp;(medianGRent_t&lt;medianGRent_c)&amp;(genD$medianHValue_t&lt;genD$medianHValue_c),1,Middle),
+         &quot;Late&quot;=ifelse(is.na(Vul)|is.na(Dem)|is.na(HousingMarket),NA,0),
+         &quot;Late&quot;=ifelse(genD$Vul==1 &amp;genD$Dem==1&amp;genD$HousingMarket==0&amp;(medianGRent_t&gt;medianGRent_c)|(genD$medianHValue_t&gt;genD$medianHValue_c) ,1,Late),
+          Gentrified=ifelse(is.na(Vul)|is.na(Dem)|is.na(HousingMarket),NA,0),
+         Gentrified=ifelse(genD$Vul==0 &amp;genD$Demdegree&gt;=3&amp;HousingMarket==0&amp;(genD$medianGRent_t&gt;genD$medianGRent_c)|(genD$medianHValue_t&gt;genD$medianHValue_c),1,Gentrified),
+         Gentrified=ifelse(genD$Vul==0 &amp;genD$WhiteandBachIncrease==1&amp;HousingMarket==0&amp;(genD$medianGRent_t&gt;genD$medianGRent_c)|(genD$medianHValue_t&gt;genD$medianHValue_c),1,Gentrified))
+         
+
+genD= genD%&gt;%
+  ###for despcriptive, distinguish between gentrification middle stage property change with demographic change
+  mutate(&quot;GenDegree1&quot;=NA) %&gt;%
+  mutate(
+    # &quot;GenDegree1&quot;=ifelse(NoGen==1,0,GenDegree1),
+    &quot;GenDegree1&quot;=ifelse(Susceptible==1,1,GenDegree1),
+    &quot;GenDegree1&quot;=ifelse(Early_Prop==1,2,GenDegree1),
+    &quot;GenDegree1&quot;=ifelse(Early_Demo==1,3,GenDegree1),
+    &quot;GenDegree1&quot;=ifelse(Middle==1,4,GenDegree1),
+    &quot;GenDegree1&quot;=ifelse(Late==1,5,GenDegree1),
+    &quot;GenDegree1&quot;=ifelse(Gentrified==1,6,GenDegree1)) %&gt;% 
+  mutate(&quot;GenDegree&quot;=NA) %&gt;%
+  mutate(
+         &quot;GenDegree&quot;=ifelse(Susceptible==1,1,GenDegree),
+         &quot;GenDegree&quot;=ifelse(Early_Prop==1,2,GenDegree),
+         &quot;GenDegree&quot;=ifelse(Early_Demo==1,2,GenDegree),
+         &quot;GenDegree&quot;=ifelse(Middle==1,3,GenDegree),
+         &quot;GenDegree&quot;=ifelse(Late==1,4,GenDegree),
+         &quot;GenDegree&quot;=ifelse(Gentrified==1,5,GenDegree)) %&gt;% 
+  mutate(&quot;GenDegree2&quot;=NA) %&gt;%
+  mutate(
+    # &quot;GenDegree&quot;=ifelse(NoGen==1,0,GenDegree),
+    &quot;GenDegree2&quot;=ifelse(Susceptible==1,1,GenDegree2),
+    &quot;GenDegree2&quot;=ifelse(Early_Prop==1,2,GenDegree2),
+    &quot;GenDegree2&quot;=ifelse(Early_Demo==1,2,GenDegree2),
+    &quot;GenDegree2&quot;=ifelse(Middle==1,2,GenDegree2),
+    &quot;GenDegree2&quot;=ifelse(Late==1,2,GenDegree2),
+    # &quot;GenDegree2&quot;=ifelse(ongoingGen==1,3,GenDegree2),
+    &quot;GenDegree2&quot;=ifelse(Gentrified==1,3,GenDegree2))
+
+df=genD %&gt;% 
+  filter(Year==c(2011,2015,2019)) %&gt;% 
+  group_by(Year,GenDegree2) %&gt;% 
+  summarise(count=n())
+
+genD_formerge = genD%&gt;%
+  select(GEOID,Year,GenDegree,GenDegree1,GenDegree2,geometry) %&gt;% 
+  st_as_sf()
+
+gentri_crime_tract_1=inner_join(gentri_crime_tract,genD_formerge,c(&quot;GEOID&quot;,&quot;Year&quot;,&quot;geometry&quot;))
+
+  ##only include the tracts have crime data (Buffalo), drop NA
+gentri_crime_tract_1=gentri_crime_tract_1[complete.cases(gentri_crime_tract_1[,&quot;parent_incident_type&quot;]),]
+  
+##collapse the sexual offense, sexual assault, and other sexual offense into a same category: sexual offense&amp; sexual assault
+gentri_crime_tract_1$parent_incident_type=as.factor(gentri_crime_tract_1$parent_incident_type)
+
+gentri_crime_tract_1$parent_incident_type=recode(gentri_crime_tract_1$parent_incident_type,&quot;Sexual Assault&quot;=&quot;Sexual Offense&amp;Sexual Assault&quot;,&quot;Sexual Offense&quot;=&quot;Sexual Offense&amp;Sexual Assault&quot;,&quot;Other Sexual Offense&quot;=&quot;Sexual Offense&amp;Sexual Assault&quot;)</code></pre>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<pre class="r"><code>#get the crime rate for each type
+gentri_crime_quick=gentri_crime_tract_1 %&gt;% 
+  select(GEOID,TotalP_t,Vul,Dem,HousingMarket,Vuldegree,Demdegree,HousingMarketDegree,GenDegree,Year,day_of_week,parent_incident_type,geometry,NAME.x,geometry)
+# 
+#crime rate per 1,000 residents in buffalo area
+Crimeoverall=gentri_crime_quick %&gt;% 
+  group_by(Year) %&gt;% 
+  summarise(mean_tract_count=mean(n()/79),#dividing by the total 79 buffalo tract 
+             TotalP_t=mean(TotalP_t),
+            CrimeRate=mean(mean_tract_count/TotalP_t*1000), ## crime rate every 1000 persons for the whole buffalo area 
+            # Crime_type=(parent_incident_type),
+            # see=mean(sum(parent_incident_type==&quot;Assault&quot;,na.rm = FALSE)/79),
+            Assault=mean(mean(sum(parent_incident_type==&quot;Assault&quot;,na.rm = FALSE)/79)/TotalP_t*1000),#Assault rate
+            Break_and_Enter=mean(mean(sum(parent_incident_type==&quot;Breaking &amp; Entering&quot;)/79)/TotalP_t*1000),
+            Homicide=mean(mean(sum(parent_incident_type==&quot;Homicide&quot;)/79)/TotalP_t*1000),
+            Robbery=mean(mean(sum(parent_incident_type==&quot;Robbery&quot;)/79)/TotalP_t*1000),
+            SexualOffenseAndSexualAssault=mean(mean(sum(parent_incident_type==&quot;Sexual Offense&amp;Sexual Assault&quot;)/79)/TotalP_t*1000),
+            Theft=mean(mean(sum(parent_incident_type==&quot;Theft&quot;)/79)/TotalP_t*1000),
+            TheftVehicle=mean(mean(sum(parent_incident_type==&quot;Theft of Vehicle&quot;)/79)/TotalP_t*1000)
+            ) %&gt;% 
+   select(-c(mean_tract_count,TotalP_t))
+Crimeoverall$Year=as.factor(Crimeoverall$Year)</code></pre>
+<p>##Gentrification degree maps in 2011, 2015, 2019</p>
+<pre class="r"><code>####mapping
+mapdf=gentri_crime_tract_1 %&gt;% 
+  mutate(&quot;parent_incident_type&quot;=  as.character(parent_incident_type))
+mapdf=gentri_crime_tract_1 %&gt;% 
+  filter(Year==2019)  %&gt;% 
+  
+  group_by(GEOID,NAME.x,Year,GenDegree2,GenDegree1,GenDegree,latitude,longitude,parent_incident_type) %&gt;% 
+  summarise(geometry=geometry,
+            count=n(),
+            Assault=sum(parent_incident_type==&quot;Assault&quot;,na.rm = FALSE),
+            Break_and_Enter=sum(parent_incident_type==&quot;Breaking &amp; Entering&quot;),
+            Homicide=sum(parent_incident_type==&quot;Homicide&quot;),
+            Robbery=sum(parent_incident_type==&quot;Robbery&quot;),
+            SexualAssault=sum(parent_incident_type==&quot;Sexual Assault&quot;),
+            SexualOffense=sum(parent_incident_type==&quot;Sexual Offense&quot;),
+            OtherSexualOff=sum(parent_incident_type==&quot;Other Sexual Offense&quot;),
+            Theft=sum(parent_incident_type==&quot;Theft&quot;),
+            TheftVehicle=sum(parent_incident_type==&quot;Theft of Vehicle&quot;)
+            
+  ) %&gt;% 
+  st_as_sf()
+
+# mapdf %&gt;% 
+#   group_by(GEOID) %&gt;% 
+#   summarise(count=n())
+
+
+map2015_1=gentri_crime_tract_1 %&gt;% 
+  mutate(&quot;parent_incident_type&quot;=  as.character(parent_incident_type)) %&gt;% 
+  filter(Year==2015) %&gt;% 
+  select(GEOID,Year,GenDegree,GenDegree1,GenDegree2,geometry) %&gt;% 
+  st_as_sf()
+# group_by(GEOID) %&gt;% 
+#   summarise(count=n())
+
+# class(map2015_1)
+map2011_1=gentri_crime_tract_1 %&gt;% 
+  filter(Year==2011) %&gt;% 
+  st_as_sf()
+
+library(ggplot2)
+ggplot(data = map2011_1, aes(fill=GenDegree2)) + geom_sf()+
+  scale_fill_viridis(option = &quot;viridis&quot;) +
+  scale_color_viridis(option = &quot;viridis&quot;)+
+  labs(title =map2011_1$Year)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-19-1.png" /><!-- --></p>
+<pre class="r"><code> # geom_label(aes(label=substr(GEOID,6,11),x,y))
+
+ggplot(data = map2015_1, aes(fill=GenDegree2)) + geom_sf()+
+  
+  scale_fill_viridis(option = &quot;viridis&quot;) +
+  scale_color_viridis(option = &quot;viridis&quot;)+
+  labs(title =map2015_1$Year)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-19-2.png" /><!-- --></p>
+<pre class="r"><code>ggplot(data = mapdf, aes(fill=GenDegree2)) + geom_sf()+
+  
+  scale_fill_viridis(option = &quot;viridis&quot;) +
+  scale_color_viridis(option = &quot;viridis&quot;)+
+  labs(title =mapdf$Year)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-19-3.png" /><!-- --></p>
+<p>##The Crime Trend in Buffalo from 2011-2019</p>
+<pre class="r"><code>df1=gather(Crimeoverall,key = crimetypes, value=crimerates,-Year) %&gt;% 
+  mutate(crimetypes=recode(crimetypes,&quot;CrimeRate&quot;=&quot;OverallCrimeRate&quot;)) #change the variable text
+ggplot(df1,aes(x=Year,y=crimerates,group=crimetypes,color=crimetypes))+
+  geom_point()+
+  geom_line()+
+  theme(axis.text.x = element_text(size = 6),
+    legend.title = element_text(size = 6), 
+    legend.box.margin=margin(-10,-10,-10,-10),
+        legend.text = element_text(size = 6),
+    legend.position = &quot;right&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-20-1.png" /><!-- --> Overall decline with some fluctuations between 2011 and 2019. (Except Break and Enter, Homicide, and Sexual Offense and Sexual Assault).</p>
+<p>##Gentrification and Crime in Buffalo in 2019</p>
+<pre class="r"><code>Gen_crimemap2019=ggplot()+
+  geom_sf(data=select(mapdf,-parent_incident_type), aes(fill=GenDegree))+
+  geom_point(data=mapdf,aes(y=latitude,x=longitude,color=parent_incident_type),size=0.00001)+
+  # scale_fill_discrete(options = &quot;viridis&quot;) +
+  # scale_color_discrete(option = &quot;viridis&quot;)+
+  facet_wrap(~parent_incident_type)+
+  labs(title =&quot;Gentrification and Crime 2019&quot;,fill=&quot;Gentrification Degree&quot;,color=&quot;Crime types&quot;)
+
+ggsave(&quot;Gentirifcation&amp;CrimeMap2019.png&quot;,width = 8.1,height = 8)
+Gen_crimemap2019</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-21-1.png" /><!-- --></p>
+<p>##Regression Regress gentrification degree on crime from 2011 to 2019</p>
+<pre class="r"><code># #Then I run a regression for each nested tibble using purrr::map:
+forcorr=gentri_crime_quick %&gt;%
+  group_by(GEOID,Year,parent_incident_type,GenDegree,Vul,Dem,HousingMarket,Vuldegree,Demdegree,HousingMarketDegree) %&gt;%
+  summarise(count=n(),
+            rate=mean(count/TotalP_t*1000)
+  )
+forcorr$Year=as.factor(forcorr$Year)
+forcorr$rate.log=log(forcorr$rate) #logged the crime rate
+
+library(broom)
+a=lm(data=forcorr,rate.log~GenDegree+Year)
+summary(a)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = rate.log ~ GenDegree + Year, data = forcorr)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.6331 -0.8834  0.1643  1.0467  4.5895 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  1.94671    0.07643  25.470  &lt; 2e-16 ***
+## GenDegree   -0.08379    0.01396  -6.001 2.15e-09 ***
+## Year2012     0.15969    0.09570   1.669   0.0953 .  
+## Year2013     0.01895    0.09600   0.197   0.8435    
+## Year2014    -0.03919    0.09740  -0.402   0.6874    
+## Year2015     0.02013    0.09496   0.212   0.8321    
+## Year2016    -0.11015    0.09506  -1.159   0.2466    
+## Year2017    -0.14791    0.09618  -1.538   0.1242    
+## Year2018    -0.10391    0.09613  -1.081   0.2798    
+## Year2019    -0.24114    0.09490  -2.541   0.0111 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.367 on 3633 degrees of freedom
+##   (799 observations deleted due to missingness)
+## Multiple R-squared:  0.016,  Adjusted R-squared:  0.01356 
+## F-statistic: 6.564 on 9 and 3633 DF,  p-value: 2.43e-09</code></pre>
+<p>Regress the specific gentrification mechanisms between tracts</p>
+<pre class="r"><code>###regress the specific mechanisms between tracts
+#Vul
+lmnested_Vul=forcorr %&gt;%
+  nest(data=-c(parent_incident_type))
+lmnested_Vul %&gt;%
+  mutate(lmmodel = map(data, ~ lm(data=.,.x$rate.log~.x$Vuldegree+.x$Year)))</code></pre>
+<pre><code>## # A tibble: 7 × 3
+## # Groups:   parent_incident_type [7]
+##   parent_incident_type          data                    lmmodel
+##   &lt;fct&gt;                         &lt;list&gt;                  &lt;list&gt; 
+## 1 Assault                       &lt;grouped_df [708 × 12]&gt; &lt;lm&gt;   
+## 2 Breaking &amp; Entering           &lt;grouped_df [700 × 12]&gt; &lt;lm&gt;   
+## 3 Sexual Offense&amp;Sexual Assault &lt;grouped_df [641 × 12]&gt; &lt;lm&gt;   
+## 4 Robbery                       &lt;grouped_df [690 × 12]&gt; &lt;lm&gt;   
+## 5 Theft                         &lt;grouped_df [711 × 12]&gt; &lt;lm&gt;   
+## 6 Theft of Vehicle              &lt;grouped_df [695 × 12]&gt; &lt;lm&gt;   
+## 7 Homicide                      &lt;grouped_df [297 × 12]&gt; &lt;lm&gt;</code></pre>
+<pre class="r"><code># This results in a list-column of S3 objects. We want to tidy each of the objects, which we can also do with map.
+library(broom)
+lm_Vul=lmnested_Vul %&gt;%
+  mutate(
+    lmReg_Vul = map(data, ~ lm(data=.,rate.log~Vuldegree+Year)), # S3 list-col
+    tidied = map(lmReg_Vul, tidy)
+  ) %&gt;%
+  unnest(tidied)
+
+##select only the slope
+lmslope_Vul=lm_Vul %&gt;% 
+  filter(term==&quot;Vuldegree&quot;) %&gt;% 
+  rename(c(slope=estimate,crime_type=parent_incident_type)) %&gt;% 
+  filter(p.value&lt;.05) %&gt;%
+  select(-c(data,lmReg_Vul))
+# mutate(=estimate)
+
+kable(lmslope_Vul) %&gt;%
+  kable_styling() %&gt;%
+  save_kable(file = &quot;Output/lmslope_Vuldegree.png&quot;)
+
+
+#Dem
+lmnested_Dem=forcorr %&gt;%
+  nest(data=-c(parent_incident_type))
+lmnested_Dem %&gt;%
+  mutate(lmmodel = map(data, ~ lm(data=.,.x$rate.log~.x$Demdegree+.x$Year)))</code></pre>
+<pre><code>## # A tibble: 7 × 3
+## # Groups:   parent_incident_type [7]
+##   parent_incident_type          data                    lmmodel
+##   &lt;fct&gt;                         &lt;list&gt;                  &lt;list&gt; 
+## 1 Assault                       &lt;grouped_df [708 × 12]&gt; &lt;lm&gt;   
+## 2 Breaking &amp; Entering           &lt;grouped_df [700 × 12]&gt; &lt;lm&gt;   
+## 3 Sexual Offense&amp;Sexual Assault &lt;grouped_df [641 × 12]&gt; &lt;lm&gt;   
+## 4 Robbery                       &lt;grouped_df [690 × 12]&gt; &lt;lm&gt;   
+## 5 Theft                         &lt;grouped_df [711 × 12]&gt; &lt;lm&gt;   
+## 6 Theft of Vehicle              &lt;grouped_df [695 × 12]&gt; &lt;lm&gt;   
+## 7 Homicide                      &lt;grouped_df [297 × 12]&gt; &lt;lm&gt;</code></pre>
+<pre class="r"><code># This results in a list-column of S3 objects. We want to tidy each of the objects, which we can also do with map.
+library(broom)
+lm_Dem=lmnested_Dem %&gt;%
+  mutate(
+    lmReg_Dem = map(data, ~ lm(data=.,rate.log~Demdegree+Year)), # S3 list-col
+    tidied = map(lmReg_Dem, tidy)
+  ) %&gt;%
+  unnest(tidied)
+
+##select only the slope
+lmslope_Dem=lm_Dem %&gt;% 
+  filter(term==&quot;Demdegree&quot;) %&gt;% 
+  rename(c(slope=estimate,crime_type=parent_incident_type)) %&gt;% 
+  filter(p.value&lt;.05) %&gt;%
+  select(-c(data,lmReg_Dem))
+# mutate(=estimate)
+
+kable(lmslope_Dem) %&gt;%
+  kable_styling() %&gt;%
+  save_kable(file = &quot;Output/lmslope_Demdegree.png&quot;)
+
+#HousingMarket
+lmnested_HousingMarket=forcorr %&gt;%
+  nest(data=-c(parent_incident_type))
+lmnested_HousingMarket %&gt;%
+  mutate(lmmodel = map(data, ~ lm(data=.,.x$rate.log~.x$HousingMarketDegree+.x$Year)))</code></pre>
+<pre><code>## # A tibble: 7 × 3
+## # Groups:   parent_incident_type [7]
+##   parent_incident_type          data                    lmmodel
+##   &lt;fct&gt;                         &lt;list&gt;                  &lt;list&gt; 
+## 1 Assault                       &lt;grouped_df [708 × 12]&gt; &lt;lm&gt;   
+## 2 Breaking &amp; Entering           &lt;grouped_df [700 × 12]&gt; &lt;lm&gt;   
+## 3 Sexual Offense&amp;Sexual Assault &lt;grouped_df [641 × 12]&gt; &lt;lm&gt;   
+## 4 Robbery                       &lt;grouped_df [690 × 12]&gt; &lt;lm&gt;   
+## 5 Theft                         &lt;grouped_df [711 × 12]&gt; &lt;lm&gt;   
+## 6 Theft of Vehicle              &lt;grouped_df [695 × 12]&gt; &lt;lm&gt;   
+## 7 Homicide                      &lt;grouped_df [297 × 12]&gt; &lt;lm&gt;</code></pre>
+<pre class="r"><code># This results in a list-column of S3 objects. We want to tidy each of the objects, which we can also do with map.
+library(broom)
+lm_HousingMarket=lmnested_HousingMarket %&gt;%
+  mutate(
+    lmReg_HousingMarket = map(data, ~ lm(data=.,rate.log~HousingMarketDegree+Year)), # S3 list-col
+    tidied = map(lmReg_HousingMarket, tidy)
+  ) %&gt;%
+  unnest(tidied)
+
+##select only the slope
+lmslope_HousingMarket=lm_HousingMarket %&gt;% 
+  filter(term==&quot;HousingMarketDegree&quot;) %&gt;% 
+  rename(c(slope=estimate,crime_type=parent_incident_type)) %&gt;% 
+  filter(p.value&lt;.05) %&gt;%
+  select(-c(data,lmReg_HousingMarket))
+# mutate(=estimate)
+
+kable(lmslope_HousingMarket) %&gt;%
+  kable_styling() %&gt;%
+  save_kable(file = &quot;Output/lmslope_HousingMarketDegree.png&quot;)</code></pre>
+<p>Gentrification was negatively associated with crime rate changes — with one degree increase in gentrification process, the tract logged crime rates decrease by 0.08. Then I regressed the specific seven crime types on gentrification degree. The results show that Buffalo tracts were significantly characterized by lower crime rates with a higher level of gentrification during this time (regarding 6 out of 7 crime types, except Theft). All the six crimes, assault, breaking and entering, robbery, sexual offense and sexual assault, theft of vehicle, and homicide were negatively related with gentrification degree. These findings are consistent with the previous findings — gentrification was negatively related with assault, homicide, and robbery in New York city and Chicago (Barton 2016b; Papachristos et al. 2011). Thereinto, assault was the one most significantly related to gentrification: for every one unit increase in gentrification degree, the logged crime rate decreases by 0.25.</p>
+<p>To begin with, Vulnerable population was positively associated with the overall crime rates. With one degree increases in Vulnerable population, the logged crime rate increases by 0.25. Vulnerable Population was positively associated with all the seven crime types, implying that tracts with a higher concentration of vulnerable population to gentrification tended to feature higher rates of the seven crime types. Besides, the second mechanism, Demographic Changes, was negatively associated with three crime types — assault, breaking and entering, and robbery. While it is not a significant mechanism for the changes of overall crime rate. Results for the Housing Market Conditions mechanism denotes that it was negatively associated with the overall crime rate. It was also negatively related to assault, breaking and entering, sexual offense and sexual assault, robbery, and theft of vehicle crime incidents. As for the magnitude of the associations of Housing Market Conditions with the three violent crime types, assault, breaking and entering, and robbery, they were both more extreme compared with the coefficients for the negative associations between Demographic Population and these three violent crimes. This indicates that Housing Market Conditions changes will likely cause greater crime changes than Demographic Population transformations.</p>
+</div>
+<div id="conclusions" class="section level1">
+<h1>Conclusions</h1>
+<pre><code>This study examines the relationship between gentrification and crime by studying the cross-sectional changes in a city. The contribution of the approach reported here is threefold. First, grounding the use of a modified quantitative operationalization of gentrification provides a more comprehensive method to capture different aspects of gentrification that were barely discussed consistently in the previous literature. Second, resorting to the gentrification stage analysis, the maps overlay the gentrification process with the seven crime types, which intuitively shows the association between them. Last, regressing the three mechanisms separately on logged crime rates sheds new lights on exploring which aspects of gentrification have the greater influence on crime.
+The overall negative association of gentrification with crime is consistent with that of Barton (2016b), MacDonald and Stokes (2020), and Papachristos et al. (2011)’s findings. Results indicated that tracts that experienced higher rates of gentrification were inclined to feature lower rates of all seven crimes from 2011 to 2019. As for the three gentrification mechanisms, Vulnerable Population to gentrification is an influential factor to all seven crime types. As expected, the greater presence of Vulnerable Population was positively associated with crime since it mostly measures the disadvantaged population in the tracts (except the percentage of foreign born, which may be related to residential mobility and instability). Moreover, Demographic Changes and Housing Market Condition changes were both negatively related to the two violent crimes — assault and robbery, but Housing Market Condition appears to be a stronger influencer on local crime changes. Theft was only negatively associated with Demographic Changes; breaking and entering and theft of vehicle were negatively associated with Housing Market Condition changes, which makes intuitively sense considering breaking and entering and theft of vehicle tended to occur with housing property. </code></pre>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p>Barton, Michael. 2016b. “Gentrification and Violent Crime in New York City.” Crime and Delinquency 62(9):1180–1202.</p>
+<p>Covington, Jeanette, and Ralph B. Taylor. 1989. “Gentrification and Crime: Robbery and Larceny Changes in Appreciating Baltimore Neighborhoods during the 1970s.” Urban Affairs Quarterly 25(1):142–72. doi: 10.1177/004208168902500109.</p>
+<p>MacDonald, John M., and Robert J. Stokes. 2020. “Gentrification, Land Use, and Crime.” Annual Review of Criminology 3(1):121–38. doi: 10.1146/annurev-criminol-011419-041505.</p>
+<p>Papachristos, Andrew V., Chris M. Smith, Mary L. Scherer, and Melissa A. Fugiero. 2011. “More Coffee, Less Crime? The Relationship between Gentrification and Neighborhood Crime Rates in Chicago, 1991 to 2005.” City &amp; Community 10(3):215–40. doi: 10.1111/j.1540-6040.2011.01371.x.</p>
+</div>
+
+<!-- give the footer some space -->
+<br/>
+<br/>
+
+<footer id="site-footer">
+  <div id="footer1">
+  This website is a project for Adam Wilson's <a href="https://wilsonlab.io/GEO511"><i> Spatial Data Science (GEO511) </i></a>Course at the University at Buffalo
+  </div>
+  <div id="footer2">
+  <a rel="license" property="http://creativecommons.org/ns#license"
+  href="http://creativecommons.org/licenses/by/4.0/" ><img src="img/cc-by.svg" alt="cc-by"/></a> 
+  </div>
+</footer>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+
+</body>
+</html>
