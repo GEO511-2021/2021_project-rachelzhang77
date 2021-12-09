@@ -621,12 +621,8 @@ forcorr$Year=as.factor(forcorr$Year)
 forcorr$rate.log=log(forcorr$rate) #logged the crime rate
 
 library(broom)
-a=lm(data=forcorr,rate.log~GenDegree+Year) %>% 
-  tidy() %>% #make it as a tidy table
-  filter(term=="GenDegree") %>% 
-  kable(caption ="Between Tract: Overall Crime") %>% 
-  kable_styling() %>%
-  save_kable(file ="Output/lmslope_betweendifference_overallcrime.png")
+a=lm(data=forcorr,rate.log~GenDegree+Year)
+summary(a)
 
 
 ```
